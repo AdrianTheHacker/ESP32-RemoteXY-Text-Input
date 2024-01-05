@@ -43,51 +43,75 @@
 // RemoteXY select connection mode and include library 
 #define REMOTEXY_MODE__ESP32CORE_WIFI_POINT
 #include <WiFi.h>
-
 #include <RemoteXY.h>
+#include <LiquidCrystal.h>
+
+
+bool submitButtonReleased = true;
+LiquidCrystal lcd(13, 12, 14, 27, 26, 25);
 
 // RemoteXY connection settings 
 #define REMOTEXY_WIFI_SSID "RemoteXY"
 #define REMOTEXY_WIFI_PASSWORD "12345678"
 #define REMOTEXY_SERVER_PORT 6377
 
-
 // RemoteXY configurate  
 #pragma pack(push, 1)
-uint8_t RemoteXY_CONF[] =   // 35 bytes
-  { 255,17,0,0,0,28,0,16,31,1,7,36,9,25,47,6,24,31,37,16,
-  1,1,33,34,23,7,176,31,83,117,98,109,105,116,0 };
+uint8_t RemoteXY_CONF[] = { 
+  255,17,0,0,0,28,0,16,31,1,7,36,9,25,47,6,24,31,37,16,
+  1,1,33,34,23,7,176,31,83,117,98,109,105,116,0 
+};
   
 // this structure defines all the variables and events of your control interface 
 struct {
+  // input variables
+  char textInput[16];     // string UTF8 end zero  
+  uint8_t submitButton;   // =1 if button pressed, else =0 
 
-    // input variables
-  char textInput[16];  // string UTF8 end zero  
-  uint8_t submitButton; // =1 if button pressed, else =0 
-
-    // other variable
-  uint8_t connect_flag;  // =1 if wire connected, else =0 
+  // other variable
+  uint8_t connect_flag;   // =1 if wire connected, else =0 
 
 } RemoteXY;
 #pragma pack(pop)
-
-/////////////////////////////////////////////
-//           END RemoteXY include          //
-/////////////////////////////////////////////
-
 
 
 void setup() 
 {
   RemoteXY_Init (); 
-  
-  
-  // TODO you setup code
+  lcd.begin(16, 2);
   Serial.begin(9600);
 }
 
 void loop() 
 { 
   RemoteXY_Handler ();
-  Serial.println(RemoteXY.submitButton);
+  lcd.setCursor(0, 0);
+
+  if(RemoteXY.submitButton == 1 && submitButtonReleased) {
+    submitButtonReleased = false;
+    Serial.println(RemoteXY.textInput);
+    lcd.println(RemoteXY.textInput);
+  }
+  
+  if(RemoteXY.submitButton == 0) {
+    submitButtonReleased = true;
+  }
+
+  delay(50);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
