@@ -19,6 +19,22 @@
 //   lcd.print(millis() / 1000);
 // }
 
+/*
+   -- New project --
+   
+   This source code of graphical user interface 
+   has been generated automatically by RemoteXY editor.
+   To compile this code using RemoteXY library 3.1.11 or later version 
+   download by link http://remotexy.com/en/library/
+   To connect using RemoteXY mobile app by link http://remotexy.com/en/download/                   
+     - for ANDROID 4.11.4 or later version;
+     - for iOS 1.9.1 or later version;
+    
+   This source code is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) any later version.    
+*/
 
 //////////////////////////////////////////////
 //        RemoteXY include library          //
@@ -38,10 +54,9 @@
 
 // RemoteXY configurate  
 #pragma pack(push, 1)
-uint8_t RemoteXY_CONF[] = { 
-  255,18,0,0,0,28,0,16,31,1,7,36,9,25,47,6,24,31,37,17,
-  1,1,33,34,23,7,176,31,83,117,98,109,105,116,0 
-};
+uint8_t RemoteXY_CONF[] =   // 35 bytes
+  { 255,17,0,0,0,28,0,16,31,1,7,36,9,25,47,6,24,31,37,16,
+  1,1,33,34,23,7,176,31,83,117,98,109,105,116,0 };
   
 // this structure defines all the variables and events of your control interface 
 struct {
@@ -65,23 +80,14 @@ struct {
 void setup() 
 {
   RemoteXY_Init (); 
-  Serial.begin(9600);
+  
   
   // TODO you setup code
-  
+  Serial.begin(9600);
 }
 
 void loop() 
 { 
   RemoteXY_Handler ();
-  
-  
-  // TODO you loop code
-  // use the RemoteXY structure for data transfer
-  // do not call delay(), use instead RemoteXY_delay() 
-  if(RemoteXY.submitButton != 0) {
-    Serial.println("Button Clicked");
-  }
-
-  delay(200);
+  Serial.println(RemoteXY.submitButton);
 }
