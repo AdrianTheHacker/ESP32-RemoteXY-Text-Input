@@ -1,4 +1,4 @@
-# Phone-to-ESP32-Text-Display
+# ESP32-RemoteXY-Text-Input
 Transfers text input from computer or phone over WIFI to ESP32. Text is displayed on LCD.
 This uses RemoteXY to assist in data transfer between my phone and the ESP32.
 
